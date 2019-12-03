@@ -46,6 +46,19 @@ class Deck {
     DeckSize() {
         return this.cartes.length;
     }
+    DeckSlice(fromId){
+        var newDeck = new Deck();
+        for (let i = fromId; i < this.DeckSize(); i++) {
+            newDeck.AddAtBegin(this.Draw());
+        }
+        return newDeck;
+    }
+    DeckFusion(otherDeck){
+        for (let i = 0; i < otherDeck.DeckSize(); i++) {
+            const card = otherDeck.cartes[i];
+            this.Add(card);
+        }
+    }
     /**
      * Tire la dernière carte du deck
      */
@@ -64,6 +77,13 @@ class Deck {
      */
     Add(aCarte) {
         this.cartes.push(aCarte);
+    }
+    /**
+     * Rajoute une carte dans le deck au début
+     * @param {Card} aCarte 
+     */
+    AddAtBegin(aCarte) {
+        this.cartes.shift(aCarte);
     }
     /**
      * Mélange le deck

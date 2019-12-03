@@ -19,7 +19,45 @@ function Setup() {
         }
     }
 }
-
+function FastClick(idCol,cardIdInDeck){
+    if(cardIdInDeck == colonnes[idCol].DeckSize()-1){
+        if(RequestOut(colonnes[idCol].Last())){
+            var card = colonnes.Draw();
+            SwitchOut(card);
+        }
+    }
+    for (let i = 0; i < colonnes.length; i++) {
+        if(i == idCol){
+            continue;
+        }
+        if(RequestMove(idCol,cardIdInDeck,i)){
+            SwitchCol(idCol,cardIdInDeck,i);
+        }
+    }
+}
+function SwitchOut(card){
+    switch (card.couleur) {
+        case COULEURS.PIQUE:
+            return sorties[0].Add(card);
+            break;
+        case COULEURS.CARREAU:
+            return sorties[1].Add(card);
+            break;
+        case COULEURS.TREFLE:
+            return sorties[2].Add(card);
+            break;
+        case COULEURS.COEUR:
+            return sorties[3].Add(card);
+            break;
+        default:
+            return false;
+            break;
+    }
+}
+function SwitchCol(fromCol,atId,toCol){
+    var tmpDeck = colonnes[fromCol].DeckSlice(atId);
+    colonnes[toCol].DeckFusion(tmpDeck);
+}
 /**
  * 
  * @param {int} fromCol 
@@ -27,7 +65,8 @@ function Setup() {
  * @param {int} toCol 
  */
 function RequestMove(fromCol, atId, toCol) {
-    return (colonnes[fromCol].cartes[atId].JustLessThan(colonnes[toCol].Last()));
+    return (colonnes[fromCol].cartes[atId].JustLessThan(colonnes[toCol].Last()) && 
+    colonnes[fromCol].cartes[atId].DifferentColor(colonnes[toCol].Last()));
 }
 /**
  * 
