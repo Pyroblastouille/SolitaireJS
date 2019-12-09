@@ -1,5 +1,5 @@
 var VALEURS = {
-    As: 1,
+    As: 'A',
     Deux: 2,
     Trois: 3,
     Quatre: 4,
@@ -9,16 +9,16 @@ var VALEURS = {
     Huit: 8,
     Neuf: 9,
     Dix: 10,
-    Valet: 11,
-    Dame: 12,
-    Roi: 13
+    Valet: 'J',
+    Dame: 'Q',
+    Roi: 'K'
 };
 
 var COULEURS = {
-    PIQUE: 1,
-    CARREAU: 2,
-    TREFLE: 3,
-    COEUR: 4
+    PIQUE: '♠',
+    CARREAU: '♦',
+    TREFLE: '♣',
+    COEUR: '♥'
 }
 
 class Deck {
@@ -28,7 +28,9 @@ class Deck {
             this.DefaultDeck();
         }
     }
-
+    /**
+     * Set le deck à 52 cartes
+     */
     DefaultDeck() {
         this.Empty();
         COULEURS.forEach(col => {
@@ -37,6 +39,9 @@ class Deck {
             });
         });
     }
+    /**
+     * Vide le deck
+     */
     Empty() {
         this.cartes = [];
     }
@@ -46,6 +51,10 @@ class Deck {
     DeckSize() {
         return this.cartes.length;
     }
+    /**
+     * 
+     * @param {int} fromId 
+     */
     DeckSlice(fromId){
         var newDeck = new Deck();
         for (let i = fromId; i < this.DeckSize(); i++) {
@@ -91,6 +100,13 @@ class Deck {
     Shuffle() {
         this.cartes.sort(() => 0.5 - Math.random());
     }
+    Write(){
+        var str = "";
+        this.cartes.forEach(element => {
+            str += element.Write()+"\n";
+        });
+        return str;
+    }
 }
 
 class Card {
@@ -98,6 +114,9 @@ class Card {
         this.couleur = Couleur;
         this.valeur = Valeur;
         this.visible = false;
+    }
+    Write(){
+        return this.valeur + " "+this.couleur;
     }
     Flip() {
         this.visible = !this.visible;

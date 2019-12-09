@@ -1,10 +1,11 @@
 var NB_COLUMNS = 7;
 var NB_OUT = 4;
 
-var pioche, colonnes, sorties;
+var pioche,unPioche, colonnes, sorties;
 
 function Setup() {
     pioche = new Deck(true);
+    unPioche = new Deck();
     colonnes = [];
     sorties = [];
     //Définit les decks de sortie
@@ -18,6 +19,16 @@ function Setup() {
             colonnes[i].Add(pioche.Draw());
         }
     }
+}
+function TakePioche(){
+    if(pioche.DeckSize() == 0){
+        while(unPioche.DeckSize() > 0){
+            pioche.AddAtBegin(unPioche.Draw());
+        }
+    }else{
+        unPioche.Add(pioche.Draw());
+    }
+
 }
 function FastClick(idCol,cardIdInDeck){
     if(cardIdInDeck == colonnes[idCol].DeckSize()-1){
@@ -89,5 +100,37 @@ function RequestOut(card) {
         default:
             return false;
             break;
+    }
+}
+function DrawThings(){
+    div_unPioche.innerText = unPioche.Write();
+    div_pioche.innerText = pioche.Write();
+
+    out0.innerText = sorties[0].Write();
+    out1.innerText = sorties[1].Write();
+    out2.innerText = sorties[2].Write();
+    out3.innerText = sorties[3].Write();
+
+    for (let i = 0; i < NB_COLUMNS; i++) {
+        var col = document.getElementById('colonne'+i);
+        col.innerText = colonnes[i].Write();
+    }
+}
+function AutoComplete(){
+    var changed = false;
+    while(RequestOut(unPioche.Last())){
+        var card = unPioche.Draw();
+        SwitchOut(card);
+        changed = true;
+    }
+    for (let i = 0; i < colonnes.length; i++) {
+        while(RequestOut(colonnes[i].Last())){
+            var card = colonnes[i].Draw();
+            SwitchOut(card);
+            changed = true;
+        }
+    }
+    if(changed){
+        AutoComplete();
     }
 }

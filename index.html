@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-</html>
-
+<html>
+<head>
+    <title>Solitaire enfait</title>
+    <style>
+    .card{
+      height: 100px;
+      width: 50px;
+    }
+    .col {
+      width: 60px;
+    }
+    .col0 {
+      left: 5px;
+    }
+    .col1 {
+      left: 70px;
+    }
+    .col2 {
+      left: 135px;
+    }
+    .col3 {
+      left: 200px;
+    }
+    .col4 {
+      left: 265px;
+    }
+    .col5 {
+      left: 330px;
+    }
+    .col6 {
+      left: 395px;
+    }
+    </style>
+</head>
+<body>
 <h1>My First Heading</h1>
 <p>My first paragraph.</p>
 
-</body>
+<div id="out0"></div>
+<div id="out1"></div>
+<div id="out2"></div>
+<div id="out3"></div>
+
+<div id="div_unPioche"></div>
+<div id="div_pioche"></div>
+
+<div id="colonne0" class="col0 col"></div>
+<div id="colonne1" class="col1 col"></div>
+<div id="colonne2" class="col2 col"></div>
+<div id="colonne3" class="col3 col"></div>
+<div id="colonne4" class="col4 col"></div>
+<div id="colonne5" class="col5 col"></div>
+<div id="colonne6" class="col6 col"></div>
+
+<div id="autoComplete"></div>
+
 <script src="const.js"></script>
 <script src="index.js"></script>
+<script>
+  Setup();
+  DrawThings();
+</script>
+</body>
 </html>
